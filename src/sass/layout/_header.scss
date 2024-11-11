@@ -1,0 +1,30 @@
+.header {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    max-width: 100%;
+    min-width: 100%;
+    padding: 0 3em 0 1em;
+    width: 100%;
+    align-items: center;
+    background: linear-gradient(to bottom right, var(--color8), var(--color9));
+  
+    .header-brand-icon {
+      width: 20%;
+    }
+  }
+  
+  .header__title {
+    color: var(--color4);
+    text-transform: uppercase;
+    padding-left: 0.3em;
+  }
+  
+  .header__title,
+  .title {
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+  }
+  

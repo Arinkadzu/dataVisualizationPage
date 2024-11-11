@@ -1,0 +1,51 @@
+.button--regular {
+    font-weight: 600 !important;
+    background-color: var(--color5) !important;
+    color: var(--color4);
+    height: 4em;
+    width: 12em;
+    align-items: center;
+  
+    span {
+      padding-left: 0.5em;
+      font-size: 2rem;
+    }
+  
+    a {
+      all: unset;
+    }
+  }
+  
+  .btn-icon {
+    max-height: 100%;
+  }
+  
+
+  .toggle-btn {
+    height: 2.1em;
+    width: 4em;
+    border: solid 3px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: var(--color4);
+    -webkit-transition: .4s;
+    transition: 0.4s;
+    align-items: center;
+  
+    img {
+      height: 100%;
+      /* right: 2px; */
+      padding-left: 1.5em;
+      -webkit-transition: .4s;
+      transition: 0.4s;
+    }
+  }
+  
+  .toggle-btn:focus {
+    outline: none;
+  }
+  
+  .toggler-dark {
+    display: none;
+  
+  }

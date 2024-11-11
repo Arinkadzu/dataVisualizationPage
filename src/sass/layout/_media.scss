@@ -1,0 +1,46 @@
+@media only screen and (max-width: 300px) {
+    body {
+        font-size: 16px !important;
+
+    }
+
+    .main__section__content {
+        .paragraph__wrapper--note {
+            width: 100% !important;
+        }
+
+        .header__title {
+            font-size: 16px !important;
+        }
+    }
+
+}
+
+@media only screen and (min-width: 301px) and (max-width: 768px) {
+    body {
+      font-size: 20px !important;
+      padding: 0 0.02em !important;
+      margin: 0 0.02em !important;
+    }
+  
+    .paragraph__wrapper--note {
+      width: 100% !important;
+    }
+  
+    .paragraph__wrapper--note {
+      width: 100% !important;
+    }
+  
+  }
+  
+  @media only screen and (min-width: 769px) and (max-width: 992px) {
+    body {
+      font-size: 24px !important;
+    }
+  }
+  
+  @media only screen and (min-width: 1200px) {
+    body {
+      font-size: 28px !important;
+    }
+  }

@@ -1,0 +1,37 @@
+/*Dark mode styling*/
+.dark-mode:not(.main__section--welcome) {
+    transition: background-color 0.5s ease, color 0.3s ease-in-out;
+    background-color: var(--main-bg-color--dark) !important;
+    color: var(--color4);
+  
+    .slider:before {
+      background-color: var(--color4);
+    }
+  
+    img.toggler-dark {
+      display: block;
+      padding-left: 0;
+      -webkit-transition: .4s;
+      transition: 0.4s;
+    }
+  
+    .toggle-btn--dark {
+      background-color: #0E1017;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+  
+    img.toggler-light {
+      display: none;
+    }
+  
+    .main__section__title__wrapper {
+      .main__section__title {
+        background: linear-gradient(to bottom right, var(--color4), var(--color6));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+    }
+  
+  }

@@ -1,0 +1,26 @@
+.dropdown-menu {
+    .star {
+      width: 1em;
+      height: 1em;
+      margin-right: 1em;
+    }
+  }
+  
+  .dropdown-toggle {
+    width: 60px;
+    height: 60px;
+    background: transparent !important;
+  }
+  
+  .dropdown-toggle::after {
+    display: none !important;
+    ;
+  }
+  
+  .navbar-brand {
+    align-items: center;
+  
+    img {
+      height: 3em !important;
+    }
+  }
