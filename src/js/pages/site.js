@@ -124,7 +124,6 @@ $(document).ready(function () {
     }
 
     function getData() {
-        console.log('Searching for data');
 
         // Define the parameters for the query
         var data = {
@@ -133,23 +132,19 @@ $(document).ready(function () {
             // Add more parameters here if needed (e.g., q for search terms)
         };
 
-        // Make the request using jQuery's $.ajax
-        $.ajax({
-            url: 'https://data.gov.lv/dati/lv/api/3/action/datastore_search', // API URL
-            type: 'GET', // HTTP method (GET request)
-            data: data, // Pass the data object with parameters
-            dataType: 'json', // Expect a JSON response
-            success: function (response) {
-                console.log(response); // Logs the API response
-                // You can now use the `response` data for further processing (e.g., display it in the UI)
-            },
-            error: function (xhr, status, error) {
-                console.error('Error fetching data:', error); // Log any errors
-            },
-            complete: function () {
-                console.log('Search complete'); // Runs after the request completes (success or failure)
-            }
-        });
+        console.log('Searching for data');
+
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // CORS proxy URL
+        const url = 'https://data.gov.lv/dati/lv/api/3/action/datastore_search?resource_id=a7a8fff9-2478-479a-9dd9-53fc5cde7ce3&limit=5';
+
+        fetch(proxyUrl + url) // Prepend the proxy URL to the API request
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Logs the data from the API
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
     }
 
 
