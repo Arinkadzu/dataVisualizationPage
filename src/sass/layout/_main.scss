@@ -1,4 +1,4 @@
-.main {
+#main {
     margin: 5em 0;
 
     /* margin-bottom: 5em; */
@@ -52,9 +52,12 @@
     }
 
     .main__section__wrapper {
-        display: flex;
-        width: 70%;
-        padding: 0 5%;
+        padding: 0 10%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        height: 90vh;
+        border-bottom: red solid 4px;
 
         .main__section__title__wrapper {
             align-items: center;
@@ -173,12 +176,12 @@
 
 .paragraph+.container {
     padding-top: 2em;
-  }
-  
-  .last-word {
+}
+
+.last-word {
     padding-top: 1em;
     font-size: 4rem;
     color: var(--color3);
     font-weight: 900;
     text-align: center;
-  }
+}

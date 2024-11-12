@@ -1,7 +1,10 @@
-export default function renderChart(selector){
-    const ctx = document.getElementById(selector);
 
-    new Chart(ctx, {
+export function renderChart(selector) {
+    const ctx = document.querySelector(`.${selector}`);
+    const canvas = document.createElement("canvas");
+    ctx.appendChild(canvas);
+
+    new Chart(canvas, {
         type: 'bar',
         data: {
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
