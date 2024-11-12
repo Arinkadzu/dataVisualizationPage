@@ -1,40 +1,57 @@
 .rotate-180 {
-    transform: rotate(180deg);
-  }
-  
-  .copyright {
-    padding-top: 0.5em;
-    font-size: 1.5rem;
-  }
-  
-  .copyright--small {
-    font-size: 1.2rem;
-  }
-  
-  .super-bold {
-    font-family: "Fugaz One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-  .point {
-    width: 2em;
-    padding-right: 0.3em;
+  transform: rotate(180deg);
+}
+
+.copyright {
+  padding-top: 0.5em;
+  font-size: 1.5rem;
+}
+
+.copyright--small {
+  font-size: 1.2rem;
+}
+
+.super-bold {
+  font-family: "Fugaz One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.point {
+  width: 2em;
+  padding-right: 0.3em;
+}
+
+.links {
+  padding: 2em 0;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(298deg) brightness(105%) contrast(102%);
+
+  a {
+    cursor: pointer;
   }
 
-  .links {
-    padding: 2em 0;
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(298deg) brightness(105%) contrast(102%);
-  
-    a {
-      cursor: pointer;
-    }
-  
-    a svg {
-      height: 40px;
-    }
-  
-    a+a {
-      padding-left: 2em;
-    }
+  a svg {
+    height: 40px;
   }
+
+  a+a {
+    padding-left: 2em;
+  }
+}
+
+
+body {
+  /* padding-top: 2em; */
+  background-color: var(--main-bg-color) !important;
+  font-family: "Didact Gothic", sans-serif !important;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  font-size: 16px !important;
+}
+
+.title {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+}
