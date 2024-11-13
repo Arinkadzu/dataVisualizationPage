@@ -27,10 +27,10 @@ export function getData(type) {
                 });
                 break;
 
-            case 'NPM':
+            case 'NMP':
                 console.log('Fetching NPM data...');
                 $.ajax({
-                    url: 'data/NPM_Novadi.json',
+                    url: 'data/NMP_Novadi.json',
                     dataType: 'json',
                     success: function (data) {
                         const labels = data.records.map(record => record[1]);

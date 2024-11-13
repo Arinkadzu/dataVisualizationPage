@@ -34,7 +34,7 @@ export function renderChart(selector, type, dataPromise) {
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: 50
                     }
                 }
             }

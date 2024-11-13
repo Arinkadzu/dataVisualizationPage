@@ -57,9 +57,9 @@
     .main__section__wrapper {
         padding: 0 10%;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 50%;
         gap: 10px;
-        height: 90vh;
+        height: 100vh;
 
         .main__section__title__wrapper {
             align-items: center;

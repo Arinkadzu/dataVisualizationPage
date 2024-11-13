@@ -62,11 +62,11 @@ $(document).ready(function () {
     const dataVisualization = {
         chartJSbar: {
             selector: 'chartJS-bar',
-            title: 'NPM',
+            title: 'NMP',
             renderFunction: renderChart,
             type: 'line',
-            data: getData('NPM'),
-            question: 'Kurš novāds ir labākais no visiem?'
+            data: getData('NMP'),
+            question: 'Navādi salidzinājas NMP sniegšanā. Kurš novāds ir labākais no visiem?'
         },
         chartJSdoughnut: {
             selector: 'chartJS--doughnut',
@@ -74,7 +74,7 @@ $(document).ready(function () {
             renderFunction: renderChart,
             type: 'doughnut',
             data: getData('students'),
-            question: 'Kura kursā ir visvairāk studentus? kā jūs no uzzinājat?'
+            question: 'Kura kursā ir visvairāk studentus? kā jūs to uzzinājat?'
         }
     }
 
