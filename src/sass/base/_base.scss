@@ -1,5 +1,7 @@
 :root{
   --header-height: 60px;
+
+  --section-padding: 0 10%;
 }
 
 .rotate-180 {
@@ -45,7 +47,6 @@
 
 
 body {
-  /* padding-top: 2em; */
   background-color: var(--main-bg-color) !important;
   font-family: "Didact Gothic", sans-serif !important;
   font-weight: 400;

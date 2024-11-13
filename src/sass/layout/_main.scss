@@ -1,50 +1,53 @@
+.main__section--welcome {
+    position: relative;
+    max-width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    padding: var(--section-padding);
+    padding-top: calc(var(--header-height) + 10em);
+
+    .main__section--welcome__image {
+        position: absolute;
+        filter: brightness(70%);
+        z-index: -100;
+        height: 120vh;
+        width: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .main__section--welcome__wrapper {
+
+        width: 70%;
+        padding: 0 5%;
+        background-color: var(--color2--opacity30);
+        backdrop-filter: blur(5px);
+        color: var(--color4);
+
+        .main__section--welcome__title {
+            padding-top: 1em;
+            font-size: 8rem;
+            text-transform: uppercase;
+        }
+
+        .paragraph__title .main__section__title--medium {
+            font-size: 0.8rem;
+        }
+    }
+}
+
 #main {
     margin: 5em 0;
 
     /* margin-bottom: 5em; */
 
-    .main__section--welcome {
-        position: relative;
-        max-width: 100%;
-        height: 100vh;
-        overflow: hidden;
-
-        .main__section--welcome__image {
-            position: absolute;
-            filter: brightness(70%);
-            z-index: -100;
-            height: 120vh;
-            width: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            -moz-transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
-            -o-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-        }
-
-        .main__section--welcome__wrapper {
-
-            width: 70%;
-            padding: 0 5%;
-            background-color: var(--color2--opacity30);
-            backdrop-filter: blur(5px);
-            color: var(--color4);
-
-            .main__section--welcome__title {
-                padding-top: 1em;
-                font-size: 8rem;
-                text-transform: uppercase;
-            }
-
-            .paragraph__title .main__section__title--medium {
-                font-size: 0.8rem;
-            }
-        }
-    }
 
     .main__section {
         display: flex;
@@ -57,7 +60,6 @@
         grid-template-columns: 1fr 1fr;
         gap: 10px;
         height: 90vh;
-        border-bottom: red solid 4px;
 
         .main__section__title__wrapper {
             align-items: center;

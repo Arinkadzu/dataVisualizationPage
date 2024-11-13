@@ -1,4 +1,5 @@
 import { renderChart } from '../js/dataVisualization/chartJS.js'
+import { getData } from '../js/utils/requestData.js'
 
 let darkMode = false;
 function switchToDarkMode(state) {
@@ -59,17 +60,21 @@ $(document).ready(function () {
     }
 
     const dataVisualization = {
-        chartJS: {
-            selector: 'chartJS',
-            title: 'Driving Tester Distribution',
+        chartJSbar: {
+            selector: 'chartJS-bar',
+            title: 'NPM',
             renderFunction: renderChart,
-            question: 'Ok?'
+            type: 'line',
+            data: getData('NPM'),
+            question: 'Kurš novāds ir labākais no visiem?'
         },
-        chartJS2: {
-            selector: 'chartJS2',
-            title: 'Driving Tester Distribution2',
+        chartJSdoughnut: {
+            selector: 'chartJS--doughnut',
+            title: 'Izglītojamo skaits uz 01.01.2024',
             renderFunction: renderChart,
-            question: 'Ok?'
+            type: 'doughnut',
+            data: getData('students'),
+            question: 'Kura kursā ir visvairāk studentus? kā jūs no uzzinājat?'
         }
     }
 
@@ -114,7 +119,7 @@ $(document).ready(function () {
 
             // Call the specific rendering function for this visualization
             if (typeof item.renderFunction === 'function') {
-                item.renderFunction(className);
+                item.renderFunction(className,item.type,item.data);
             }
         });
     }
@@ -123,33 +128,32 @@ $(document).ready(function () {
         console.log('WORKING')
     }
 
-    function getData() {
+    //function getData() {
 
+        //TRY for api data.gov.lv
         // Define the parameters for the query
-        var data = {
-            resource_id: 'a7a8fff9-2478-479a-9dd9-53fc5cde7ce3', // Resource ID of the dataset
-            limit: 5 // Limit the results to 5 entries
-            // Add more parameters here if needed (e.g., q for search terms)
-        };
+        // var data = {
+        //     resource_id: 'a7a8fff9-2478-479a-9dd9-53fc5cde7ce3', // Resource ID of the dataset
+        //     limit: 100 // Limit the results to 5 entries
+        // };
 
-        console.log('Searching for data');
+        // console.log('Searching for data');
 
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // CORS proxy URL
-        const url = 'https://data.gov.lv/dati/lv/api/3/action/datastore_search?resource_id=a7a8fff9-2478-479a-9dd9-53fc5cde7ce3&limit=5';
+        // const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // CORS proxy URL
+        // const url = `https://data.gov.lv/dati/lv/api/3/action/datastore_search?resource_id=${data.resource_id}&limit=${data.limit}`;
 
-        fetch(proxyUrl + url) // Prepend the proxy URL to the API request
-            .then(response => response.json())
-            .then(data => {
-                console.log(data); // Logs the data from the API
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }
+        // fetch(proxyUrl + url) // Prepend the proxy URL to the API request
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data); // Logs the data from the API
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching data:', error);
+        //     });
 
-
-
-    getData();
+        //Local request:
+        
+    //}
     createVisualizationElements(dataVisualization);
 
 });
