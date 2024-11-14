@@ -1,4 +1,5 @@
 import { renderChart } from '../js/dataVisualization/chartJS.js'
+import { renderD3 } from '../js/dataVisualization/d3.js'
 import { getData } from '../js/utils/requestData.js'
 
 let darkMode = false;
@@ -66,7 +67,7 @@ $(document).ready(function () {
             renderFunction: renderChart,
             type: 'line',
             data: getData('NMP'),
-            question: 'Navādi salidzinājas NMP sniegšanā. Kurš novāds ir labākais no visiem?'
+            question: 'Navadi salidzinājas NMP sniegšanā. Kurš novāds ir labākais no visiem?'
         },
         chartJSdoughnut: {
             selector: 'chartJS--doughnut',
@@ -74,7 +75,15 @@ $(document).ready(function () {
             renderFunction: renderChart,
             type: 'doughnut',
             data: getData('students'),
-            question: 'Kura kursā ir visvairāk studentus? kā jūs to uzzinājat?'
+            question: 'Kura kursā ir visvairāk studentus? Kā jūs to uzzinājat?'
+        },
+        d3doughnut: {
+            selector: 'd3--doughnut',
+            title: 'Izglītojamo skaits uz 01.01.2024',
+            renderFunction: renderD3,
+            type: 'doughnut',
+            data: getData('students'),
+            question: 'Kura kursā ir visvairāk studentus? Kā jūs to uzzinājat?'
         }
     }
 

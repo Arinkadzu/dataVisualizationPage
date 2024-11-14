@@ -1,10 +1,10 @@
 export function renderChart(selector, type, dataPromise) {
     const ctx = document.querySelector(`.${selector}`);
-    const canvas = document.createElement("canvas");
-    ctx.appendChild(canvas);
+    const element = document.createElement("canvas");
+    ctx.appendChild(element);
 
     dataPromise.then(chartData => {
-        new Chart(canvas, {
+        new Chart(element, {
             type: type, 
             data: {
                 labels: chartData.labels,
