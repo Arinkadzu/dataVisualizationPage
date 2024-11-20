@@ -1,0 +1,14 @@
+.scroll-bar {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    height: 10px;
+    width: 100%;
+
+    .progress-line{
+        background: linear-gradient(to right, #4caf50, #2196f3);
+        width: 0; 
+        height:100%;
+    }
+    
+}

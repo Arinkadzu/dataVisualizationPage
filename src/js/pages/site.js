@@ -60,6 +60,22 @@ $(document).ready(function () {
         currentSectionSpan.textContent = getCurrentSectionText();
     }
 
+    const scrollBar = document.querySelector('.progress-line');
+
+    window.addEventListener('scroll', () => {
+        // Calculate the total scrollable height
+        const scrollableHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        // Get the current scroll position
+        const scrollTop = document.documentElement.scrollTop;
+
+        // Calculate the scroll percentage
+        const scrollPercentage = (scrollTop / scrollableHeight) * 100;
+
+        // Set the width of the scroll bar based on scroll percentage
+        scrollBar.style.width = scrollPercentage + '%';
+    });
+
     const dataVisualization = {
         chartJSbar: {
             selector: 'chartJS-bar',
