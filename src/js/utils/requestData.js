@@ -31,15 +31,14 @@ export function getData(type) {
                     url: 'data/latvian_students.json',
                     dataType: 'json',
                     success: function (data) {
-                        // Extract labels (fields 12 to 16) and student counts for records (columns 12 to 16)
                         const labels = data.fields.slice(12, 17).map(item => item.id);
                         const studentCounts = data.records[29].slice(12, 17);
-
-                        // Prepare the data for the chart
-                        const chartData = {
-                            labels: labels,
-                            data: studentCounts
-                        };
+                        
+                        const chartData = labels.map((label, i) => ({
+                            label: label,
+                            value: studentCounts[i]
+                        }));
+                        
                         console.log(type, ' data:', chartData)
 
                         // Resolve the Promise with chart data

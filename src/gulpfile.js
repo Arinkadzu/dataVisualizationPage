@@ -4,6 +4,7 @@ const cleanCSS = require('gulp-clean-css');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const concat = require('gulp-concat');
+const sourcemaps = require('gulp-sourcemaps'); 
 const path = require('path');
 
 // Task to delete the dist folder
@@ -12,11 +13,23 @@ gulp.task('clean', async function () {
     return del.deleteSync(['dist']);
 });
 
+gulp.task('clean-js', async function () {
+    const del = await import('del');
+    return del.deleteSync(['dist/js']);
+});
+
+
+gulp.task('clean-styles', async function () {
+    const del = await import('del');
+    return del.deleteSync(['dist/css']);
+});
+
 // Task to minify and combine JavaScript files in the 'js/pages' folder into 'scripts.min.js'
 gulp.task('minify-js-pages', function () {
     return gulp.src('js/pages/**/*.js')
         .pipe(concat('scripts.min.js'))
         .pipe(uglify())
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('dist/js'));
 });
 
@@ -36,6 +49,7 @@ gulp.task('minify-js-others', function () {
             
             return filePath;
         }))
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('dist/js'));
 });
 
@@ -48,5 +62,8 @@ gulp.task('minify-css', function () {
         .pipe(gulp.dest('dist/css'));
 });
 
+gulp.task('styles', gulp.series('clean-styles', 'minify-css'));
+
+gulp.task('js', gulp.series('clean-js', 'minify-js-pages', 'minify-js-others'));
 // Default task
 gulp.task('default', gulp.series('clean', 'minify-js-pages', 'minify-js-others', 'minify-css'));

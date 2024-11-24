@@ -1,0 +1,1 @@
+import*as Plot from"../lib/plot/plot.min.js";function renderPlot(r,o,t){t.then(o=>{var t=Plot.rectY({length:1e4},Plot.binX({y:"count"},{x:Math.random})).plot();document.querySelector("."+r).append(t)}).catch(o=>console.error("Error loading data:",o))}export{renderPlot};

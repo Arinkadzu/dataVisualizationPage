@@ -46,6 +46,7 @@ export default class NavigationComponent {
     setupEventListeners() {
       // Handle dropdown item clicks
       this.dropdownMenu.addEventListener('click', (e) => {
+        //TODO: render select title in navbar
         if (e.target.closest('.dropdown-item')) {
           const targetId = e.target.closest('.dropdown-item').getAttribute('href').slice(1);
           const targetElement = document.getElementById(targetId);
