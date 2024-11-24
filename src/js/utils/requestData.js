@@ -1,6 +1,6 @@
 export function getData(type) {
     return new Promise((resolve, reject) => {
-        switch(type) {
+        switch (type) {
             case 'students':
                 $.ajax({
                     url: 'data/latvian_students.json',
@@ -16,7 +16,7 @@ export function getData(type) {
                             data: studentCounts
                         };
                         console.log(type, ' data:', chartData)
-                        
+
                         // Resolve the Promise with chart data
                         resolve(chartData);
                     },
@@ -26,7 +26,31 @@ export function getData(type) {
                     }
                 });
                 break;
+            case 'students-d3':
+                $.ajax({
+                    url: 'data/latvian_students.json',
+                    dataType: 'json',
+                    success: function (data) {
+                        // Extract labels (fields 12 to 16) and student counts for records (columns 12 to 16)
+                        const labels = data.fields.slice(12, 17).map(item => item.id);
+                        const studentCounts = data.records[29].slice(12, 17);
 
+                        // Prepare the data for the chart
+                        const chartData = {
+                            labels: labels,
+                            data: studentCounts
+                        };
+                        console.log(type, ' data:', chartData)
+
+                        // Resolve the Promise with chart data
+                        resolve(chartData);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error loading student data:', error);
+                        reject(error);
+                    }
+                });
+                break;
             case 'NMP':
                 console.log('Fetching NPM data...');
                 $.ajax({
