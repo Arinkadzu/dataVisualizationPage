@@ -1,6 +1,7 @@
 import { renderChart } from '../dataVisualization/chartJS.js';
 import { renderD3 } from '../dataVisualization/d3.js';
-import { renderPlot } from '../dataVisualization/plot.js';
+//import { renderPlot } from '../dataVisualization/plot.js';
+import { renderInfogram } from '../dataVisualization/infogram.js';
 import { getData } from '../utils/requestData.js';
 import { QUESTIONS } from '../dataVisualization/questionsBase.js';
 
@@ -32,13 +33,21 @@ export default class VisualizationComponnet {
           data: getData('students-d3'),
           question: QUESTIONS.students[1]
         },
-        plot: {
-          selector: 'plot',
-          title: 'NMP',
-          renderFunction: renderPlot,
-          type: '',
-          data: getData('NMP'),
-          question: QUESTIONS.nmp[1]
+        // plot: {
+        //   selector: 'plot',
+        //   title: 'NMP',
+        //   renderFunction: renderPlot,
+        //   type: '',
+        //   data: getData('NMP'),
+        //   question: QUESTIONS.nmp[1]
+        // },
+        infogram: {
+          selector: 'inforgam',
+            title: 'Test',
+            renderFunction: renderInfogram,
+            type: '',
+            data: getData('NMP'),
+            question: QUESTIONS.nmp[1]
         }
       };
     }
