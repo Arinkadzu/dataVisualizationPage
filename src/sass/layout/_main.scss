@@ -1,48 +1,49 @@
+$color-primary: #667eea;
+$color-secondary: #764ba2;
+$color-background: #f9f9f9;
+$color-dark: #333;
+$color-light: #f1f1f1;
+$color-highlight: var(--color4);
+$max-width: 1200px;
+
 .main__section--welcome {
     position: relative;
     max-width: 100%;
     height: 100vh;
     overflow: hidden;
-    padding: 0% 20%;
+    padding: 5% 10%;
     padding-top: calc(var(--header-height));
-    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
     display: flex;
     align-items: center;
+    justify-content: center;
 
-    .main__section--welcome__image {
+    &__image {
         position: absolute;
         filter: brightness(50%);
         z-index: -100;
         height: 120vh;
         width: 100%;
         object-fit: cover;
-        position: absolute;
         top: 50%;
         left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        -o-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
     }
 
-    .main__section--welcome__wrapper {
-
-        //width: 70%;
-        //padding: 10% 15%;
-
-        //background-color: var(--color2--opacity30);
+    &__wrapper {
         backdrop-filter: blur(5px);
-        color: var(--color4);
+        color: $color-highlight;
+        text-align: center;
 
-        .main__section--welcome__title {
-            padding-top: 1em;
-            font-size: 10rem;
+        &__title {
+            font-size: 6rem;
             text-transform: uppercase;
+            margin-bottom: 1rem;
         }
 
-        .paragraph__title .main__section__title--medium {
-            font-size: 0.8rem;
+        p {
+            font-size: 1.5rem;
+            line-height: 1.6;
         }
     }
 }
@@ -50,24 +51,22 @@
 #main {
     margin: 5em 0;
 
-    /* margin-bottom: 5em; */
-
-
     .main__section {
         display: flex;
         justify-content: center;
+        animation: fadeInSection 1s ease-out forwards;
     }
 
     .main__section__wrapper {
-        padding: 0 20%;
+        padding: 0 10%;
         display: grid;
-        grid-template-columns: 1fr 50%;
-        gap: 10px;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
         height: 100vh;
+        align-items: center;
 
         .main__section__title__wrapper {
             align-items: center;
-            width: 100%;
             justify-content: center;
             margin: 2em 0;
 
@@ -78,8 +77,7 @@
             }
 
             .main__section__title {
-                /* white-space: nowrap; */
-                font-size: 3rem;
+                font-size: 2.5rem;
                 background: linear-gradient(to bottom right, var(--color5), var(--color9));
                 -webkit-background-clip: text;
                 background-clip: text;
@@ -88,7 +86,7 @@
         }
 
         .main__section__content {
-            .paragraph+.paragraph {
+            .paragraph + .paragraph {
                 padding-top: 1em;
             }
         }
@@ -102,85 +100,45 @@
         .paragraph__title {
             font-size: 2rem;
         }
-
     }
 }
 
-.title--description {
-    justify-content: center;
-
-    .main__section__title__wrapper {
-        width: 70%;
-        padding: 0 !important;
-
-        .main__section__title {
-            word-wrap: break-word !important;
-            white-space: normal !important;
-        }
+// Анимация появления при прокрутке
+@keyframes fadeInSection {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
     }
-
-
-}
-
-.paragraph__title--point {
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-}
-
-.main__section__title {
-    text-transform: uppercase;
-}
-
-.main__section__content {
-    .paragraph__wrapper--note {
-
-        .paragraph__title {
-            font-size: 3rem !important;
-            font-weight: 900 !important;
-        }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
 .paragraph__wrapper--note {
     background: linear-gradient(to bottom right, var(--color5), var(--color9));
     padding: 2em;
-    color: var(--color4);
+    color: $color-highlight;
     border-radius: 3em;
-    width: 70%;
+    width: 80%;
+    margin: 2em 0;
 }
 
-.paragraph__wrapper--note+.paragraph__wrapper--note {
+.paragraph__wrapper--note + .paragraph__wrapper--note {
     margin-top: 3em;
-}
-
-#section2 .paragraph-wrapper+.paragraph-wrapper {
-    margin-top: 2em;
-}
-
-.carusel-image,
-.main__section__image--square {
-    width: 15em;
-    object-fit: cover;
-}
-
-.main__section__image--square {
-    padding-right: 2em;
-
 }
 
 .main__section--last {
     background: linear-gradient(to bottom right, var(--color7), var(--color2));
-    color: var(--color4) !important;
+    color: $color-highlight !important;
 
     .main__section__title {
-        color: var(--color4) !important;
+        color: $color-highlight !important;
         font-size: 6rem !important;
-
     }
 }
 
-.paragraph+.container {
+.paragraph + .container {
     padding-top: 2em;
 }
 
@@ -190,4 +148,70 @@
     color: var(--color3);
     font-weight: 900;
     text-align: center;
+}
+
+.course-work-description {
+    max-width: 800px;
+    padding: 20px;
+    background-color: $color-background;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: $color-dark;
+    text-align: justify;
+
+    &::first-letter {
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+}
+
+// Медиазапросы для адаптивности
+
+@media (max-width: 768px) {
+    .main__section--welcome {
+        padding: 10% 5%;
+    }
+
+    .main__section--welcome__wrapper {
+        padding: 5%;
+    }
+
+    .main__section--welcome__title {
+        font-size: 4rem;
+    }
+
+    .paragraph__title {
+        font-size: 1.5rem;
+    }
+
+    .main__section__wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .main__section__title {
+        font-size: 2rem;
+    }
+
+    .course-work-description {
+        padding: 10px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main__section--welcome__title {
+        font-size: 3rem;
+    }
+
+    .course-work-description {
+        padding: 5px;
+        font-size: 0.9rem;
+    }
+
+    .paragraph__title {
+        font-size: 1.2rem;
+    }
 }

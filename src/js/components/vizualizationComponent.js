@@ -136,6 +136,18 @@ export default class VisualizationComponnet {
 
   renderBasicQuestions() {
     const mainContainer = document.getElementById('main');
+
+    // Заголовок перед основными вопросами
+    const title = document.createElement('h2');
+    title.classList.add('questions-title');
+    title.textContent = 'Atbildiet uz papildus jautājumiem:';
+
+    const separator = document.createElement('hr');
+    separator.classList.add('questions-separator');
+
+    mainContainer.appendChild(separator);
+    mainContainer.appendChild(title);
+
     const questions = QUESTIONS.basic;
     Object.entries(questions).forEach(([key, value]) => {
       const section = this.renderBasicQuestion(key, value);
@@ -170,7 +182,7 @@ export default class VisualizationComponnet {
     if (existingMessage) existingMessage.remove();
 
     // Handle button click
-    function handleButtonClick () {
+    function handleButtonClick() {
       let button = submissionSection.querySelector('.js-send-button');
       if (button) button.remove();
       let thankYouMessage = document.createElement('div');
@@ -180,7 +192,7 @@ export default class VisualizationComponnet {
       // Lock all inputs (disable them)
       let inputs = document.querySelectorAll('input, textarea, select');
       inputs.forEach(input => {
-          input.disabled = true;
+        input.disabled = true;
       });
     }
 
@@ -193,7 +205,7 @@ export default class VisualizationComponnet {
     } else {
       let message = document.createElement('div');
       message.className = 'js-warning-message alert alert-warning';
-      message.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Lai nosūtītu formu, jāaizpilda visus laukus';
+      message.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Lai nosūtītu formu, jāaizpilda visi lauki.';
       submissionSection.appendChild(message);
     }
 
