@@ -6,16 +6,26 @@ export function getData(type) {
                     url: 'data/latvian_students.json',
                     dataType: 'json',
                     success: function (data) {
-                        // Extract labels (fields 12 to 16) and student counts for records (columns 12 to 16)
-                        const labels = data.fields.slice(12, 17).map(item => item.id);
-                        const studentCounts = data.records[29].slice(12, 17);
+                        // Index of needed data
+                        const novadsIndex = data.fields.findIndex(field => field.id === "Pašvaldība");
+                        const totalStudentsIndex = data.fields.findIndex(field => field.id === "Izglītojamo skaits kopā (1.-4.kurss)");
 
-                        // Prepare the data for the chart
+                        // Group data of NOVADS and summarize count of students
+                        const novadsData = data.records.reduce((acc, record) => {
+                            const novads = record[novadsIndex];
+                            const studentCount = record[totalStudentsIndex] || 0; // Учитываем возможные пустые значения
+                            acc[novads] = (acc[novads] || 0) + studentCount;
+                            return acc;
+                        }, {});
+
+                        // Prepare data for graphs
+                        const labels = Object.keys(novadsData); // Unique NOVADS
+                        const studentCounts = Object.values(novadsData); // Total count of students
+
                         const chartData = {
                             labels: labels,
                             data: studentCounts
                         };
-                        console.log(type, ' data:', chartData)
 
                         // Resolve the Promise with chart data
                         resolve(chartData);
@@ -33,13 +43,11 @@ export function getData(type) {
                     success: function (data) {
                         const labels = data.fields.slice(12, 17).map(item => item.id);
                         const studentCounts = data.records[29].slice(12, 17);
-                        
+
                         const chartData = labels.map((label, i) => ({
                             label: label,
                             value: studentCounts[i]
                         }));
-                        
-                        console.log(type, ' data:', chartData)
 
                         // Resolve the Promise with chart data
                         resolve(chartData);
@@ -51,7 +59,6 @@ export function getData(type) {
                 });
                 break;
             case 'NMP':
-                console.log('Fetching NPM data...');
                 $.ajax({
                     url: 'data/NMP_Novadi.json',
                     dataType: 'json',
@@ -62,7 +69,6 @@ export function getData(type) {
                             labels: labels,
                             data: counts
                         };
-                        console.log(type, ' data:', chartData)
                         resolve(chartData);
                     },
                     error: function (xhr, status, error) {
