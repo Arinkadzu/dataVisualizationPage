@@ -2,53 +2,75 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 export function renderD3(selector, type, dataPromise) {
     const ctx = document.querySelector(`.${selector}`);
-    const width = 400;
-    const height = 400;
-    const radius = Math.min(width, height) / 2;
+    const width = 800;
+    const height = 500;
 
-    // Create a container for the chart
+    const margin = { top: 40, right: 40, bottom: 40, left: 60 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
     const svg = d3.select(ctx)
         .append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr("transform", `translate(${width / 2}, ${height / 2})`);
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    const pastelColors = [
+        "#a8dadc", "#ffb3ba", "#c0f0c0", "#fef2c7", "#ffd6a5", 
+        "#b8c6ff", "#ff9a8b", "#ff77b6", "#d4fc79", "#f0e1a3"
+    ];
+
+    const color = d3.scaleOrdinal(pastelColors);
+
+    const xScale = d3.scaleBand().padding(0.1);
+    const yScale = d3.scaleLinear();
 
     dataPromise.then(data => {
-        // Define the color scale
-        const color = d3.scaleOrdinal()
-            .domain(data.map(d => d.label))
-            .range(d3.schemeCategory10);
+        if (!data || !data.ageData || data.ageData.length === 0) {
+            console.error("Data is not properly formatted or empty");
+            return;
+        }
 
-        // Compute the pie
-        const pie = d3.pie()
-            .value(d => d.value)
-            .sort(null);
+        const ageData = data.ageData;
 
-        const arc = d3.arc()
-            .innerRadius(radius * 0.5) // Inner radius for doughnut
-            .outerRadius(radius);
+        if (ageData.some(d => d.value === undefined || d.value === null)) {
+            console.error("Invalid data in ageData:", ageData);
+            return;
+        }
 
-        // Join the data
-        const slices = svg.selectAll("path")
-            .data(pie(data))
+        xScale.domain(ageData.map(d => d.label)).range([0, innerWidth]);
+        yScale.domain([0, d3.max(ageData, d => d.value)]).range([innerHeight, 0]);
+
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", `translate(0,${innerHeight})`)
+            .call(d3.axisBottom(xScale));
+
+        svg.append("g")
+            .attr("class", "y-axis")
+            .call(d3.axisLeft(yScale));
+
+        svg.selectAll(".bar")
+            .data(ageData)
             .enter()
-            .append("path")
-            .attr("d", arc)
-            .attr("fill", d => color(d.data.label))
-            .attr("stroke", "white")
-            .attr("stroke-width", 2);
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", d => xScale(d.label))
+            .attr("y", d => yScale(d.value))
+            .attr("width", xScale.bandwidth())
+            .attr("height", d => innerHeight - yScale(d.value))
+            .attr("fill", (d, i) => color(i));
 
-        // Add labels
-        svg.selectAll("text")
-            .data(pie(data))
+        svg.selectAll(".text")
+            .data(ageData)
             .enter()
             .append("text")
-            .attr("transform", d => `translate(${arc.centroid(d)})`)
+            .attr("class", "text")
+            .attr("x", d => xScale(d.label) + xScale.bandwidth() / 2)
+            .attr("y", d => yScale(d.value) - 10)
             .attr("text-anchor", "middle")
-            .style("font-size", "12px")
-            .style("fill", "#fff")
-            .text(d => d.data.label);
-        console.log(data);
+            .text(d => d.value);
     }).catch(error => console.error("Error loading data:", error));
 }
+

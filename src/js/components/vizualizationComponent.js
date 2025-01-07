@@ -10,15 +10,15 @@ export default class VisualizationComponnet {
   constructor() {
 
     this.visualizations = {
-      chartJSbar: {
-        selector: 'chartJS-bar',
-        title: 'NMP',
-        renderFunction: renderChart,
-        type: 'line',
-        data: getData('NMP'),
-        question: QUESTIONS.nmp[1],
-        notVisible: true
-      },
+      // chartJSbar: {
+      //   selector: 'chartJS-bar',
+      //   title: 'NMP',
+      //   renderFunction: renderChart,
+      //   type: 'line',
+      //   data: getData('NMP'),
+      //   question: QUESTIONS.nmp[1],
+      //   notVisible: true
+      // },
       chartJSdoughnut: {
         selector: 'chartJS--doughnut',
         title: 'Izglītojamo skaits profesionālās izglītības programmās uz 01.01.2024',
@@ -29,11 +29,11 @@ export default class VisualizationComponnet {
       },
       d3doughnut: {
         selector: 'd3--doughnut',
-        title: 'Izglītojamo skaits uz 01.01.2024',
+        title: 'Medicīniskās palīdzības pieprasījumi pēc vecuma grupām',
         renderFunction: renderD3,
         type: 'doughnut',
-        data: getData('students-d3'),
-        question: QUESTIONS.students[1]
+        data: getData('NMP'),
+        question: QUESTIONS.nmp[1]
       },
       // plot: {
       //   selector: 'plot',
@@ -90,13 +90,15 @@ export default class VisualizationComponnet {
   createVisualizations() {
     const mainContainer = document.getElementById('main');
 
-    Object.values(this.visualizations).forEach(viz => {
-      const section = this.createVisualizationSection(viz);
+    const visualizationsArray = Object.values(this.visualizations);
+
+    visualizationsArray.forEach((vizConfig, index) => {
+      const section = this.createVisualizationSection(vizConfig, index);
       if (section) {
         mainContainer.appendChild(section);
 
-        if (typeof viz.renderFunction === 'function') {
-          viz.renderFunction(`js-visualization-${viz.selector}`, viz.type, viz.data);
+        if (typeof vizConfig.renderFunction === 'function') {
+          vizConfig.renderFunction(`js-visualization-${vizConfig.selector}`, vizConfig.type, vizConfig.data);
         }
       }
     });
@@ -111,16 +113,30 @@ export default class VisualizationComponnet {
     return element;
   }
 
+  generateTitle(index, titleText) {
+    const diagramNumber = this.createElement('div', 'title-number', [], `${index + 1}. diagramma:`);
+    const title = this.createElement('div', 'title-text', [], titleText);
+
+    const titleWrapper = this.createElement('div', 'visualization-title', []);
+    titleWrapper.appendChild(diagramNumber);
+    titleWrapper.appendChild(title);
+
+    return titleWrapper;
+  }
+
   // Create a single visualization section
-  createVisualizationSection(vizConfig) {
+  createVisualizationSection(vizConfig, index) {
     if (vizConfig.notVisible) return null;
+
     const section = document.createElement('div');
     section.className = `main__section__wrapper navigation-section`;
     section.id = `section-${vizConfig.selector}`;
-    section.setAttribute('data-title', vizConfig.title); // Add data-attribute
+    section.setAttribute('data-title', vizConfig.title);
+
+    const titleWrapper = this.generateTitle(index, vizConfig.title);
 
     const vizWrapper = this.createElement('div', 'data-visualization__wrapper', [
-      this.createElement('div', 'visualization-title', [], vizConfig.title),
+      titleWrapper,
       this.createElement('div', `js-visualization-${vizConfig.selector}`)
     ]);
 

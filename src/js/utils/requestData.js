@@ -60,22 +60,59 @@ export function getData(type) {
                 break;
             case 'NMP':
                 $.ajax({
-                    url: 'data/NMP_Novadi.json',
+                    url: 'data/NMP.json',
                     dataType: 'json',
                     success: function (data) {
-                        const labels = data.records.map(record => record[1]);
-                        const counts = data.records.map(record => record[4]);
-                        const chartData = {
-                            labels: labels,
-                            data: counts
-                        };
-                        resolve(chartData);
+                        if (!data || !data.records || data.records.length === 0) {
+                            reject("Invalid data format");
+                            return;
+                        }
+
+                        console.log('console.log(data);', data);
+
+                        // Функция для извлечения возраста из строки, например "86 gadi" -> 86
+                        function extractAge(ageString) {
+                            return parseInt(ageString, 10);
+                        }
+
+                        const age_0_18 = data.records.filter(record => {
+                            const age = extractAge(record[4]);
+                            return age >= 0 && age <= 18;
+                        }).reduce((sum, record) => sum + record[5], 0);
+
+                        const age_19_35 = data.records.filter(record => {
+                            const age = extractAge(record[4]);
+                            return age >= 19 && age <= 35;
+                        }).reduce((sum, record) => sum + record[5], 0);
+
+                        const age_36_60 = data.records.filter(record => {
+                            const age = extractAge(record[4]);
+                            return age >= 36 && age <= 60;
+                        }).reduce((sum, record) => sum + record[5], 0);
+
+                        const age_60_plus = data.records.filter(record => {
+                            const age = extractAge(record[4]);
+                            return age > 60;
+                        }).reduce((sum, record) => sum + record[5], 0);
+
+                        const ageData = [
+                            { label: "Vecums 0-18", value: age_0_18 },
+                            { label: "Vecums 19-35", value: age_19_35 },
+                            { label: "Vecums 36-60", value: age_36_60 },
+                            { label: "Vecums 60+", value: age_60_plus }
+                        ];
+
+                        console.log('console.log(ageData);', ageData);
+
+                        resolve({
+                            ageData: ageData,
+                        });
                     },
                     error: function (xhr, status, error) {
-                        console.error('Error loading NPM data:', error);
                         reject(error);
                     }
                 });
+
                 break;
 
             default:
