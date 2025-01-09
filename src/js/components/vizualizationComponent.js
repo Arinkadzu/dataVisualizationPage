@@ -1,6 +1,7 @@
 import { renderChart } from '../dataVisualization/chartJS.js';
 import { renderD3 } from '../dataVisualization/d3.js';
-//import { renderPlot } from '../dataVisualization/plot.js';
+import { renderPlot } from '../dataVisualization/plot.js';
+import { renderApexChart } from '../dataVisualization/apexChart.js';
 import { renderInfogram } from '../dataVisualization/infogram.js';
 import { renderEasel } from '../dataVisualization/easel.js';
 import { getData } from '../utils/requestData.js';
@@ -20,36 +21,44 @@ export default class VisualizationComponnet {
       //   notVisible: true
       // },
       chartJSdoughnut: {
-        selector: 'chartJS--doughnut',
-        title: 'Izglītojamo skaits profesionālās izglītības programmās uz 01.01.2024',
+        selector: 'chartJS',
+        title: 'Izglītojamo skaits profesionālās izglītības programmās.',
         renderFunction: renderChart,
         type: 'doughnut',
-        data: getData('students'),
-        question: QUESTIONS.students[2]
+        data: getData('chartJS'),
+        question: QUESTIONS.diagramm[2]
       },
       d3doughnut: {
-        selector: 'd3--doughnut',
-        title: 'Medicīniskās palīdzības pieprasījumi pēc vecuma grupām',
+        selector: 'd3',
+        title: 'Medicīniskās palīdzības pieprasījumi pēc vecuma grupām.',
         renderFunction: renderD3,
         type: 'doughnut',
-        data: getData('NMP'),
-        question: QUESTIONS.nmp[1]
+        data: getData('d3'),
+        question: QUESTIONS.diagramm[1]
       },
-      // plot: {
-      //   selector: 'plot',
-      //   title: 'NMP',
-      //   renderFunction: renderPlot,
-      //   type: '',
-      //   data: getData('NMP'),
-      //   question: QUESTIONS.nmp[1]
-      // },
+      plot: {
+        selector: 'plot',
+        title: 'Laulību skaits uz 1 000 iedzīvotājiem pa gadiem',
+        renderFunction: renderPlot,
+        type: '',
+        data: getData('plot'),
+        question: QUESTIONS.diagramm[3]
+      },
+      apexChart: {
+        selector: 'apexChart',
+        title: 'Novadi pēc veiksmīgajiem palīdzības sniegšanas gadījumiem',
+        renderFunction: renderApexChart,
+        type: '',
+        data: getData('apexChart'),
+        question: QUESTIONS.diagramm[4]
+      },
       infogram: {
         selector: 'inforgam',
         title: 'Test',
         renderFunction: renderInfogram,
         type: '',
         data: getData('NMP'),
-        question: QUESTIONS.nmp[1]
+        question: QUESTIONS.diagramm[1]
       },
       easel: {
         selector: 'easel',
@@ -57,7 +66,7 @@ export default class VisualizationComponnet {
         renderFunction: renderEasel,
         type: '',
         data: getData('NMP'),
-        question: QUESTIONS.nmp[1]
+        question: QUESTIONS.diagramm[1]
       }
     };
   }

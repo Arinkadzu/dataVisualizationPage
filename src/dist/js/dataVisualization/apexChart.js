@@ -1,0 +1,1 @@
+function renderApexChart(e,r,t){let a=document.querySelector("."+e);t.then(e=>{new ApexCharts(a,{chart:{type:"bar",height:350},series:[{name:"Veiksmīgo uzdevumu skaits",data:e.values}],xaxis:{categories:e.categories},plotOptions:{bar:{distributed:!0}}}).render()}).catch(e=>{console.error("Error rendering plot:",e)})}export{renderApexChart};

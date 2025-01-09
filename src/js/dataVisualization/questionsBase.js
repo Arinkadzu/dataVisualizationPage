@@ -1,10 +1,9 @@
 export const QUESTIONS = {
-    nmp: {
-        1: "Kuri vecuma grupas ir visbiežāk sastopamas medicīniskās palīdzības pieprasījumos?"
-    },
-    students: {
-        1: "Kurā kursā ir visvairāk studentu? Kā jūs to noskaidrojāt?",
-        2: "Kura novada ir visvairāk studentus? Kā jūs to uzzinājat?"
+    diagramm: {
+        1: "Kuri vecuma grupas ir visbiežāk sastopamas medicīniskās palīdzības pieprasījumos?",
+        2: "Kurā kursā ir visvairāk studentu? Kā jūs to noskaidrojāt?",
+        3: "Kā laulību skaits ir mainījies pēdējo 10 gadu laikā?",
+        4: "Kuri novadi izceļas ar vislielāko palīdzības sniegšanas efektivitāti?"
     },
     basic:{
         1: "Kura no diagrammām, kas ir attēlotas šajā lapā, jums patika visvairāk un kāpēc?",

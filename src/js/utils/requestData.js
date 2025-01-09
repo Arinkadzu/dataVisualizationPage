@@ -1,7 +1,7 @@
 export function getData(type) {
     return new Promise((resolve, reject) => {
         switch (type) {
-            case 'students':
+            case 'chartJS':
                 $.ajax({
                     url: 'data/latvian_students.json',
                     dataType: 'json',
@@ -36,29 +36,7 @@ export function getData(type) {
                     }
                 });
                 break;
-            case 'students-d3':
-                $.ajax({
-                    url: 'data/latvian_students.json',
-                    dataType: 'json',
-                    success: function (data) {
-                        const labels = data.fields.slice(12, 17).map(item => item.id);
-                        const studentCounts = data.records[29].slice(12, 17);
-
-                        const chartData = labels.map((label, i) => ({
-                            label: label,
-                            value: studentCounts[i]
-                        }));
-
-                        // Resolve the Promise with chart data
-                        resolve(chartData);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error loading student data:', error);
-                        reject(error);
-                    }
-                });
-                break;
-            case 'NMP':
+            case 'd3':
                 $.ajax({
                     url: 'data/NMP.json',
                     dataType: 'json',
@@ -68,9 +46,6 @@ export function getData(type) {
                             return;
                         }
 
-                        console.log('console.log(data);', data);
-
-                        // Функция для извлечения возраста из строки, например "86 gadi" -> 86
                         function extractAge(ageString) {
                             return parseInt(ageString, 10);
                         }
@@ -102,8 +77,6 @@ export function getData(type) {
                             { label: "Vecums 60+", value: age_60_plus }
                         ];
 
-                        console.log('console.log(ageData);', ageData);
-
                         resolve({
                             ageData: ageData,
                         });
@@ -112,7 +85,74 @@ export function getData(type) {
                         reject(error);
                     }
                 });
+                break;
+            case 'plot':
+                $.ajax({
+                    url: 'data/laulibas.csv',
+                    success: function (data) {
 
+                        const dataPromise = new Promise((resolve, reject) => {
+                            try {
+                                const rows = data.trim().split('\n').slice(1);
+
+                                const parsedData = rows.map(row => {
+                                    const [year, value] = row.split(';').map(item => item.trim().replace(/"/g, ''));
+
+                                    const numericYear = parseInt(year, 10);
+                                    const numericValue = parseFloat(value);
+
+                                    if (isNaN(numericYear) || isNaN(numericValue)) {
+                                        return null;
+                                    }
+
+                                    return {
+                                        year: numericYear,
+                                        value: numericValue
+                                    };
+                                }).filter(item => item !== null);
+
+                                resolve(parsedData);
+                            } catch (error) {
+                                console.error('Error parsing data:', error);
+                                reject(error);
+                            }
+                        });
+
+                        resolve(dataPromise);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error loading data:', error);
+                    }
+                });
+                break;
+            case 'apexChart':
+                $.ajax({
+                    url: 'data/NMP_Novadi.json',
+                    dataType: 'json',
+                    success: function (data) {
+                        const sortedData = data.records.sort((a, b) => b[3] - a[3]);
+                        const top10 = sortedData.slice(0, 10);
+            
+                        const chartData = {
+                            categories: top10.map(item => item[1]),
+                            values: top10.map(item => item[3])
+                        };
+            
+                        const dataPromise = new Promise((resolve, reject) => {
+                            try {
+                                resolve(chartData);
+                            } catch (error) {
+                                console.error('Error parsing data:', error);
+                                reject(error);
+                            }
+                        });
+
+                        resolve(dataPromise);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error loading data:', error);
+                    }
+                });
                 break;
 
             default:

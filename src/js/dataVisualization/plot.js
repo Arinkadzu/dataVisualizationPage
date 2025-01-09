@@ -1,10 +1,36 @@
-import * as Plot from "../lib/plot/plot.min.js";
+import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm"; 
 
 export function renderPlot(selector, type, dataPromise) {
+    const container = document.querySelector(`.${selector}`);
 
-    dataPromise.then(chartData => {
-        const plot = Plot.rectY({length: 10000}, Plot.binX({y: "count"}, {x: Math.random})).plot();
-        const div = document.querySelector(`.${selector}`);
-        div.append(plot);
-    }).catch(error => console.error("Error loading data:", error));
+    dataPromise
+        .then(data => {
+
+            const filteredData = data.slice(-10);
+
+            const plot = Plot.plot({
+                marks: [
+                    Plot.line(filteredData, { x: "year", y: "value", stroke: "blue" }),
+                    Plot.dot(filteredData, { x: "year", y: "value", fill: "blue" })
+                ],
+                x: { 
+                    label: "Gads", 
+                    grid: true,
+                    tickFormat: (d) => d.toString() // удаляем форматирование с запятой
+                },
+                y: { 
+                    label: "Laulību skaits uz 1 000 iedzīvotāju", 
+                    grid: true 
+                },
+                height: 400,
+                width: 600
+            });
+
+            container.innerHTML = '';
+            container.appendChild(plot);
+        })
+        .catch(error => {
+            console.error('Error rendering plot:', error);
+        });
 }
+
