@@ -1,8 +1,8 @@
 // Import statements
-import NavigationComponent from '~/js/components/navigationComponent.js';
-import VisualizationComponnet from '~/js/components/vizualizationComponent.js';
-import ThemeManager from '~/js/components/darkModeComponent.js';
-import ProgressLineComponent from '~/js/components/ProgressLineComponent.js';
+import NavigationComponent from '../../dist/js/components/navigationComponent.js'//'../../dist/js/components/navigationComponent.js';
+import VisualizationComponnet from '../../dist/js/components/vizualizationComponent.js';
+import ThemeManager from '../../dist/js/components/darkModeComponent.js';
+import ProgressLineComponent from '../../dist/js/components/ProgressLineComponent.js';
 
 // Initialize when document is ready
 document.addEventListener('DOMContentLoaded', () => {
