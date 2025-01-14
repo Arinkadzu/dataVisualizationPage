@@ -22,7 +22,6 @@ export default class NavigationComponent {
           title: section.getAttribute('data-title') || section.id,
           iconLight: 'images/star-dark.svg'
         });
-        console.log(section.id);
         this.dropdownMenu.appendChild(navItem);
       });
     }

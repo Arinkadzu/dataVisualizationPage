@@ -2,6 +2,8 @@ import { renderChart } from '../dataVisualization/chartJS.js';
 import { renderD3 } from '../dataVisualization/d3.js';
 import { renderPlot } from '../dataVisualization/plot.js';
 import { renderApexChart } from '../dataVisualization/apexChart.js';
+import { renderPlotly } from '../dataVisualization/plotly.js';
+import { renderGoogleChart } from '../dataVisualization/googleChart.js';
 import { renderInfogram } from '../dataVisualization/infogram.js';
 import { renderEasel } from '../dataVisualization/easel.js';
 import { getData } from '../utils/requestData.js';
@@ -11,15 +13,6 @@ export default class VisualizationComponnet {
   constructor() {
 
     this.visualizations = {
-      // chartJSbar: {
-      //   selector: 'chartJS-bar',
-      //   title: 'NMP',
-      //   renderFunction: renderChart,
-      //   type: 'line',
-      //   data: getData('NMP'),
-      //   question: QUESTIONS.nmp[1],
-      //   notVisible: true
-      // },
       chartJSdoughnut: {
         selector: 'chartJS',
         title: 'Izglītojamo skaits profesionālās izglītības programmās.',
@@ -52,12 +45,27 @@ export default class VisualizationComponnet {
         data: getData('apexChart'),
         question: QUESTIONS.diagramm[4]
       },
+      plotly: {
+        selector: 'plotly',
+        title: 'Studentu skaits Rīgā pa kursiem',
+        renderFunction: renderPlotly,
+        type: '',
+        data: getData('plotly'),
+        question: QUESTIONS.diagramm[5]
+      },
+      googleChart: {
+        selector: 'googleChart',
+        title: 'Izglītojamo skaits profesionālās izglītības programmās.',
+        renderFunction: renderGoogleChart,
+        type: '',
+        data: getData('googleChart'),
+        question: QUESTIONS.diagramm[2]
+      },
       infogram: {
         selector: 'inforgam',
         title: 'Test',
         renderFunction: renderInfogram,
         type: '',
-        data: getData('NMP'),
         question: QUESTIONS.diagramm[1]
       },
       easel: {
@@ -65,7 +73,6 @@ export default class VisualizationComponnet {
         title: 'Test',
         renderFunction: renderEasel,
         type: '',
-        data: getData('NMP'),
         question: QUESTIONS.diagramm[1]
       }
     };
@@ -86,10 +93,8 @@ export default class VisualizationComponnet {
       const allFilled = Array.from(inputs).every(input => input.value.trim() !== '');
 
       this.renderSendButton(allFilled);
-      console.log('Filled', allFilled)
     };
 
-    console.log('inputs', inputs)
     inputs.forEach(input => {
       input.addEventListener('input', checkInputs);
     });
@@ -106,9 +111,13 @@ export default class VisualizationComponnet {
       if (section) {
         mainContainer.appendChild(section);
 
-        if (typeof vizConfig.renderFunction === 'function') {
-          vizConfig.renderFunction(`js-visualization-${vizConfig.selector}`, vizConfig.type, vizConfig.data);
-        }
+        if (typeof vizConfig.renderFunction === 'function' && vizConfig.data) {
+          if(vizConfig.data){
+            vizConfig.renderFunction(`js-visualization-${vizConfig.selector}`, vizConfig.type, vizConfig.data);
+          }else {
+            vizConfig.renderFunction(`js-visualization-${vizConfig.selector}`, vizConfig.type);
+          }
+        } 
       }
     });
   }

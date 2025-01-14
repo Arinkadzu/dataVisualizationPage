@@ -6,28 +6,24 @@ export function getData(type) {
                     url: 'data/latvian_students.json',
                     dataType: 'json',
                     success: function (data) {
-                        // Index of needed data
                         const novadsIndex = data.fields.findIndex(field => field.id === "Pašvaldība");
                         const totalStudentsIndex = data.fields.findIndex(field => field.id === "Izglītojamo skaits kopā (1.-4.kurss)");
 
-                        // Group data of NOVADS and summarize count of students
                         const novadsData = data.records.reduce((acc, record) => {
                             const novads = record[novadsIndex];
-                            const studentCount = record[totalStudentsIndex] || 0; // Учитываем возможные пустые значения
+                            const studentCount = record[totalStudentsIndex] || 0;
                             acc[novads] = (acc[novads] || 0) + studentCount;
                             return acc;
                         }, {});
 
-                        // Prepare data for graphs
-                        const labels = Object.keys(novadsData); // Unique NOVADS
-                        const studentCounts = Object.values(novadsData); // Total count of students
+                        const labels = Object.keys(novadsData);
+                        const studentCounts = Object.values(novadsData);
 
                         const chartData = {
                             labels: labels,
                             data: studentCounts
                         };
 
-                        // Resolve the Promise with chart data
                         resolve(chartData);
                     },
                     error: function (xhr, status, error) {
@@ -132,12 +128,12 @@ export function getData(type) {
                     success: function (data) {
                         const sortedData = data.records.sort((a, b) => b[3] - a[3]);
                         const top10 = sortedData.slice(0, 10);
-            
+
                         const chartData = {
                             categories: top10.map(item => item[1]),
                             values: top10.map(item => item[3])
                         };
-            
+
                         const dataPromise = new Promise((resolve, reject) => {
                             try {
                                 resolve(chartData);
@@ -154,6 +150,96 @@ export function getData(type) {
                     }
                 });
                 break;
+            case 'plotly':
+                $.ajax({
+                    url: 'data/latvian_students.json',
+                    dataType: 'json',
+                    success: function (data) {
+
+                        const rigaData = data.records.filter(record => record[1] === "RĪGA");
+
+                        const courseData = {
+                            course1: 0,
+                            course2: 0,
+                            course3: 0,
+                            course4: 0,
+                        };
+
+                        rigaData.forEach(record => {
+                            courseData.course1 += record[12]; 
+                            courseData.course2 += record[13]; 
+                            courseData.course3 += record[14];
+                            courseData.course4 += record[15];
+                        });
+
+                        const chartData = {
+                            course1: courseData.course1,
+                            course2: courseData.course2,
+                            course3: courseData.course3,
+                            course4: courseData.course4
+                        };
+                        
+
+                        const dataPromise = new Promise((resolve, reject) => {
+                            try {
+                                resolve(chartData);
+                            } catch (error) {
+                                console.error('Error preparing data:', error);
+                                reject(error);
+                            }
+                        });
+
+                        resolve(dataPromise);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error loading data:', error);
+                    }
+                });
+                break;
+                case 'googleChart':
+                    $.ajax({
+                        url: 'data/latvian_students.json',
+                        dataType: 'json',
+                        success: function (data) {
+                            const novadsIndex = data.fields.findIndex(field => field.id === "Pašvaldība");
+                            const totalStudentsIndex = data.fields.findIndex(field => field.id === "Izglītojamo skaits kopā (1.-4.kurss)");
+                        
+                            const novadsData = data.records.reduce((acc, record) => {
+                                const novads = record[novadsIndex];
+                                const studentCount = record[totalStudentsIndex] || 0;
+                                acc[novads] = (acc[novads] || 0) + studentCount;
+                                return acc;
+                            }, {});
+                        
+                            const labels = Object.keys(novadsData);
+                            const studentCounts = Object.values(novadsData);
+                            const totalStudents = studentCounts.reduce((sum, count) => sum + count, 0);
+                        
+                            const percentageData = studentCounts.map(count => ((count / totalStudents) * 100).toFixed(2));
+                        
+                            const chartData = {
+                                labels: labels,
+                                studentCounts: studentCounts,
+                                percentages: percentageData
+                            };
+    
+                            const dataPromise = new Promise((resolve, reject) => {
+                                try {
+                                    resolve(chartData);
+                                } catch (error) {
+                                    console.error('Error preparing data:', error);
+                                    reject(error);
+                                }
+                            });
+    
+                            resolve(dataPromise);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error loading data:', error);
+                        }
+                    });
+                    break;
+    
 
             default:
                 console.log("Invalid request");

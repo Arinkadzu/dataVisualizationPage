@@ -16,7 +16,7 @@ export function renderPlot(selector, type, dataPromise) {
                 x: { 
                     label: "Gads", 
                     grid: true,
-                    tickFormat: (d) => d.toString() // удаляем форматирование с запятой
+                    tickFormat: (d) => d.toString()
                 },
                 y: { 
                     label: "Laulību skaits uz 1 000 iedzīvotāju", 
