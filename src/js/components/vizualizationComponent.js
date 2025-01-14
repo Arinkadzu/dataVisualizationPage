@@ -63,17 +63,17 @@ export default class VisualizationComponnet {
       },
       infogram: {
         selector: 'inforgam',
-        title: 'Test',
+        title: 'Palīdzības sniegšanas gadījumi pa novadiem 2022. un 2023. gadā.',
         renderFunction: renderInfogram,
         type: '',
-        question: QUESTIONS.diagramm[1]
+        question: QUESTIONS.diagramm[6]
       },
       easel: {
         selector: 'easel',
-        title: 'Test',
+        title: 'Laulību skaits uz 1 000 iedzīvotājiem pa gadiem',
         renderFunction: renderEasel,
         type: '',
-        question: QUESTIONS.diagramm[1]
+        question: QUESTIONS.diagramm[3]
       }
     };
   }
@@ -111,7 +111,7 @@ export default class VisualizationComponnet {
       if (section) {
         mainContainer.appendChild(section);
 
-        if (typeof vizConfig.renderFunction === 'function' && vizConfig.data) {
+        if (typeof vizConfig.renderFunction === 'function') {
           if(vizConfig.data){
             vizConfig.renderFunction(`js-visualization-${vizConfig.selector}`, vizConfig.type, vizConfig.data);
           }else {

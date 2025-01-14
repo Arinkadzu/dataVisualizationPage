@@ -1,8 +1,7 @@
 export function renderEasel(selector, type, dataPromise) {
+    const container = document.querySelector(`.${selector}`);
 
-    dataPromise.then(chartData => {
-        const diagram = `<iframe width="596" height="321" frameborder="0" scrolling="no" style="overflow-y:hidden;" src="https://www.easel.ly/index/embedFrame/easel/14539794"></iframe>`
-        const div = document.querySelector(`.${selector}`);
-        div.innerHTML = diagram;
-    }).catch(error => console.error("Error loading data:", error));
+    const diagram = `<iframe width="960" height="609" frameborder="0" scrolling="no" style="overflow-y:hidden;" src="https://www.easel.ly/index/embedFrame/easel/14549697"></iframe>`;
+
+    container.innerHTML = diagram;
 }

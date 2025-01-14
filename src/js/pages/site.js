@@ -1,4 +1,3 @@
-// Import statements
 import NavigationComponent from '../../dist/js/components/navigationComponent.js'//'../../dist/js/components/navigationComponent.js';
 import VisualizationComponnet from '../../dist/js/components/vizualizationComponent.js';
 import ThemeManager from '../../dist/js/components/darkModeComponent.js';

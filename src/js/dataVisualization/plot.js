@@ -7,7 +7,6 @@ export function renderPlot(selector, type, dataPromise) {
         .then(data => {
 
             const filteredData = data.slice(-10);
-
             const plot = Plot.plot({
                 marks: [
                     Plot.line(filteredData, { x: "year", y: "value", stroke: "blue" }),

@@ -1,1 +1,1 @@
-function renderEasel(r,e,n){n.then(e=>{document.querySelector("."+r).innerHTML='<iframe width="596" height="321" frameborder="0" scrolling="no" style="overflow-y:hidden;" src="https://www.easel.ly/index/embedFrame/easel/14539794"></iframe>'}).catch(e=>console.error("Error loading data:",e))}export{renderEasel};
+function renderEasel(e,r,n){document.querySelector("."+e).innerHTML='<iframe width="960" height="609" frameborder="0" scrolling="no" style="overflow-y:hidden;" src="https://www.easel.ly/index/embedFrame/easel/14549697"></iframe>'}export{renderEasel};
