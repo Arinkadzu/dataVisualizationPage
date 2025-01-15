@@ -81,18 +81,17 @@ export default class VisualizationComponnet {
   // Initialize all components
   init() {
     this.createVisualizations();
-    this.renderBasicQuestions();
     this.addInputListeners();
-    this.renderSendButton(false);
   }
 
   addInputListeners() {
+    const form = document.getElementById('form');
     const inputs = document.querySelectorAll('input');
 
     const checkInputs = () => {
       const allFilled = Array.from(inputs).every(input => input.value.trim() !== '');
 
-      this.renderSendButton(allFilled);
+      this.renderSendButton(allFilled, form);
     };
 
     inputs.forEach(input => {
@@ -102,24 +101,31 @@ export default class VisualizationComponnet {
 
   // Create visualization elements
   createVisualizations() {
-    const mainContainer = document.getElementById('main');
+
+    const form = document.getElementById('form');
 
     const visualizationsArray = Object.values(this.visualizations);
 
     visualizationsArray.forEach((vizConfig, index) => {
+
       const section = this.createVisualizationSection(vizConfig, index);
+
       if (section) {
-        mainContainer.appendChild(section);
+        form.appendChild(section);
 
         if (typeof vizConfig.renderFunction === 'function') {
-          if(vizConfig.data){
+          if (vizConfig.data) {
             vizConfig.renderFunction(`js-visualization-${vizConfig.selector}`, vizConfig.type, vizConfig.data);
-          }else {
+          } else {
             vizConfig.renderFunction(`js-visualization-${vizConfig.selector}`, vizConfig.type);
           }
-        } 
+        }
       }
     });
+
+    this.renderBasicQuestions(form);
+
+    this.renderSendButton(false, form);
   }
 
   // Helper function to create elements
@@ -158,20 +164,30 @@ export default class VisualizationComponnet {
       this.createElement('div', `js-visualization-${vizConfig.selector}`)
     ]);
 
-    const formWrapper = this.createElement('div', 'form__wrapper', [
-      this.createElement('label', '', [], vizConfig.question),
-      this.createElement('input', `js-form-input-${vizConfig.selector}`)
-    ]);
+    const inputWrapper = document.createElement('div');
+    inputWrapper.className = 'form__wrapper';
+
+    const label = document.createElement('label');
+    label.setAttribute('for', `input-${vizConfig.selector}`);
+    label.textContent = vizConfig.question;
+
+    const input = document.createElement('input');
+    input.id = `input-${vizConfig.selector}`;
+    input.name = `input-${vizConfig.selector}`;
+    input.type = 'text';
+    input.required = true;
+
+    inputWrapper.appendChild(label);
+    inputWrapper.appendChild(input);
 
     section.appendChild(vizWrapper);
-    section.appendChild(formWrapper);
+    section.appendChild(inputWrapper);
+
     return section;
   }
 
-  renderBasicQuestions() {
-    const mainContainer = document.getElementById('main');
+  renderBasicQuestions(container) {
 
-    // Заголовок перед основными вопросами
     const title = document.createElement('h2');
     title.classList.add('questions-title');
     title.textContent = 'Atbildiet uz papildus jautājumiem:';
@@ -179,31 +195,45 @@ export default class VisualizationComponnet {
     const separator = document.createElement('hr');
     separator.classList.add('questions-separator');
 
-    mainContainer.appendChild(separator);
-    mainContainer.appendChild(title);
+    container.appendChild(separator);
+    container.appendChild(title);
 
     const questions = QUESTIONS.basic;
     Object.entries(questions).forEach(([key, value]) => {
       const section = this.renderBasicQuestion(key, value);
-      mainContainer.appendChild(section);
+      container.appendChild(section);
     });
   }
 
   renderBasicQuestion(key, value) {
     const section = document.createElement('div');
-    const formWrapper = this.createElement('div', 'form__wrapper--tight', [
-      this.createElement('label', '', [], value),
-      this.createElement('input', `js-form-input-question-${key}`)
-    ]);
-    section.append(formWrapper);
+    section.className = 'form__section';
+
+    const formWrapper = document.createElement('div');
+    formWrapper.className = 'form__wrapper--tight';
+
+    const label = document.createElement('label');
+    label.setAttribute('for', `input-question-${key}`);
+    label.textContent = value;
+
+    const input = document.createElement('input');
+    input.id = `input-question-${key}`;
+    input.name = `question-${key}`;
+    input.type = 'text';
+    input.required = true;
+
+    formWrapper.appendChild(label);
+    formWrapper.appendChild(input);
+    section.appendChild(formWrapper);
+
     return section;
   }
 
-  renderSendButton(state) {
-    const mainContainer = document.getElementById('main');
+  renderSendButton(state, container) {
 
     // Find or create submission section
-    let submissionSection = mainContainer.querySelector('.submition-section');
+    let submissionSection = container.querySelector('.submition-section');
+
     if (!submissionSection) {
       submissionSection = document.createElement('div');
       submissionSection.className = 'submition-section';
@@ -215,26 +245,12 @@ export default class VisualizationComponnet {
     if (existingButton) existingButton.remove();
     if (existingMessage) existingMessage.remove();
 
-    // Handle button click
-    function handleButtonClick() {
-      let button = submissionSection.querySelector('.js-send-button');
-      if (button) button.remove();
-      let thankYouMessage = document.createElement('div');
-      thankYouMessage.className = 'js-thank-you-message alert alert-success';
-      thankYouMessage.innerHTML = '<i class="fa-solid fa-fire"></i> Paldies par dalību! Forma nosūtīta :)';
-      submissionSection.appendChild(thankYouMessage);
-      // Lock all inputs (disable them)
-      let inputs = document.querySelectorAll('input, textarea, select');
-      inputs.forEach(input => {
-        input.disabled = true;
-      });
-    }
-
     if (state) {
       let button = document.createElement('button');
+      button.type = 'submit';
       button.className = 'js-send-button button--regular';
       button.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Nosūtīt atbildes';
-      button.addEventListener('click', handleButtonClick);
+      //button.addEventListener('click', handleButtonClick);
       submissionSection.appendChild(button);
     } else {
       let message = document.createElement('div');
@@ -243,8 +259,23 @@ export default class VisualizationComponnet {
       submissionSection.appendChild(message);
     }
 
-    if (!mainContainer.contains(submissionSection)) {
-      mainContainer.appendChild(submissionSection);
+    // Handle button click
+    function handleButtonClick() {
+
+      let button = submissionSection.querySelector('.js-send-button');
+      if (button) button.remove();
+      let thankYouMessage = document.createElement('div');
+      thankYouMessage.className = 'js-thank-you-message alert alert-success';
+      thankYouMessage.innerHTML = '<i class="fa-solid fa-fire"></i> Paldies par dalību! Forma nosūtīta :)';
+      submissionSection.appendChild(thankYouMessage);
+
+      let inputs = document.querySelectorAll('input, textarea, select');
+      inputs.forEach(input => {
+        input.disabled = true;
+      });
+    }
+    if (!container.contains(submissionSection)) {
+      container.appendChild(submissionSection);
     }
   }
 }
