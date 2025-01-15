@@ -245,19 +245,24 @@ export default class VisualizationComponnet {
     if (existingButton) existingButton.remove();
     if (existingMessage) existingMessage.remove();
 
-    if (state) {
-      let button = document.createElement('button');
-      button.type = 'submit';
-      button.className = 'js-send-button button--regular';
-      button.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Nosūtīt atbildes';
-      //button.addEventListener('click', handleButtonClick);
-      submissionSection.appendChild(button);
-    } else {
-      let message = document.createElement('div');
+    // if (state) {
+    //   let button = document.createElement('button');
+    //   button.type = 'submit';
+    //   button.className = 'js-send-button button--regular';
+    //   button.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Nosūtīt atbildes';
+    //   button.addEventListener('click', handleButtonClick);
+    //   submissionSection.appendChild(button);
+    // } else {
+    //   let message = document.createElement('div');
+    //   message.className = 'js-warning-message alert alert-warning';
+    //   message.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Lai nosūtītu formu, jāaizpilda visi lauki.';
+    //   submissionSection.appendChild(message);
+    // }
+
+    let message = document.createElement('div');
       message.className = 'js-warning-message alert alert-warning';
-      message.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Lai nosūtītu formu, jāaizpilda visi lauki.';
+      message.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Formu nosūtīšana ir pabeigta, paldies par dalību!';
       submissionSection.appendChild(message);
-    }
 
     // Handle button click
     function handleButtonClick() {
