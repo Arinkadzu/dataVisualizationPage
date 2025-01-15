@@ -59,7 +59,7 @@ export default class VisualizationComponnet {
         renderFunction: renderGoogleChart,
         type: '',
         data: getData('googleChart'),
-        question: QUESTIONS.diagramm[2]
+        question: QUESTIONS.diagramm[7]
       },
       infogram: {
         selector: 'inforgam',
